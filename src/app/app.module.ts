@@ -15,6 +15,11 @@ import {MatListModule} from '@angular/material/list';
 import { HomeComponent } from './home/home.component';
 import { EventComponent } from './event/event.component';
 import { ErrorComponent } from './error/error.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -26,6 +31,11 @@ import { ErrorComponent } from './error/error.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
     HttpClientModule,
     MatIconModule,
     MatButtonModule,
@@ -36,6 +46,7 @@ import { ErrorComponent } from './error/error.component';
     ThemePickerModule,
     BrowserAnimationsModule
   ],
+  // exports: [ MatFormFieldModule, MatInputModule ],
   providers: [],
   bootstrap: [AppComponent]
 })
