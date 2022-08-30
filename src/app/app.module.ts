@@ -9,6 +9,9 @@ import {MatIconModule} from '@angular/material/icon';
 import {HttpClientModule} from '@angular/common/http';
 import { ThemePickerModule } from './shared/theme-picker';
 import {MatButtonModule} from '@angular/material/button';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatSelectModule} from '@angular/material/select';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -20,6 +23,9 @@ import {MatButtonModule} from '@angular/material/button';
     HttpClientModule,
     MatIconModule,
     MatButtonModule,
+    MatSidenavModule,
+    MatSelectModule,
+    MatListModule,
     MatToolbarModule,
     ThemePickerModule,
     BrowserAnimationsModule
