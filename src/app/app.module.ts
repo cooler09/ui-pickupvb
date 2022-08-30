@@ -12,10 +12,16 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatSelectModule} from '@angular/material/select';
 import {MatListModule} from '@angular/material/list';
+import { HomeComponent } from './home/home.component';
+import { EventComponent } from './event/event.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    EventComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

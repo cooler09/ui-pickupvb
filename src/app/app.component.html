@@ -8,7 +8,7 @@
   <theme-picker></theme-picker>
 </mat-toolbar>
 <mat-drawer-container [hasBackdrop]="true">
-  <mat-drawer #drawer mode="push">
+  <mat-drawer #drawer mode="over">
     
       <mat-nav-list>
         <a mat-list-item >
@@ -18,7 +18,6 @@
       </mat-nav-list>
   </mat-drawer>
   <mat-drawer-content>
-    asdf
+    <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>
-<router-outlet></router-outlet>
