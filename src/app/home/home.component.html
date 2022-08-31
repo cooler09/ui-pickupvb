@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+            <form [formGroup]="createEventForm" (ngSubmit)="onSubmit()">
               <mat-form-field appearance="fill">
                 <mat-label>Event Name</mat-label>
                 <input matInput formControlName="eventName" placeholder="Volleyball Open Play" value="">
@@ -75,7 +75,7 @@
                   
                 </div>
               </div>
-              <button mat-raised-button color="primary" type="submit" [disabled]="!profileForm.valid">Submit</button>
+              <button mat-raised-button color="primary" type="submit" [disabled]="!createEventForm.valid">Submit</button>
             </form>
         </div>
     </div>

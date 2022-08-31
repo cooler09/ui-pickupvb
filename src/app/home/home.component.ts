@@ -7,7 +7,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  profileForm:FormGroup;
+  createEventForm:FormGroup;
   positions = [
     {value: 'A', name: 'Any'},
     {value: 'L', name: 'Libero'},
@@ -16,24 +16,24 @@ export class HomeComponent implements OnInit {
     {value: 'O', name: 'Outside Hitter'},
     {value: 'R', name: 'Right Side'},
     {value: 'D', name: 'Defensive Specialist'},
-];
-templates = [
-  {value: '1', name: '5-1 Rotation'},
-  {value: '2', name: '5-1 Rotation Typewrite'},
-  {value: '3', name: '5-1 Rotation No Libero'},
-  {value: '4', name: '4-2 Rotation'},
-  {value: '5', name: '4-2 Rotation Typewrite'},
-  {value: '6', name: '4-2 Rotation No Libero'},
-];
+  ];
+  templates = [
+    {value: '1', name: '5-1 Rotation'},
+    {value: '2', name: '5-1 Rotation Typewrite'},
+    {value: '3', name: '5-1 Rotation No Libero'},
+    {value: '4', name: '4-2 Rotation'},
+    {value: '5', name: '4-2 Rotation Typewrite'},
+    {value: '6', name: '4-2 Rotation No Libero'},
+  ];
   times: any = [];
   get IsMaxPlayers() {
-    return this.profileForm.get('isMaxPlayers')?.value;
+    return this.createEventForm.get('isMaxPlayers')?.value;
   }
   get Players():FormArray {
-    return this.profileForm.get('players') as FormArray;
+    return this.createEventForm.get('players') as FormArray;
   }
   constructor(private fb: FormBuilder) { 
-    this.profileForm = this.fb.group({
+    this.createEventForm = this.fb.group({
       eventDate: ['', Validators.required],
       startTime: ['', Validators.required],
       startTimeAMPM: ['PM', Validators.required],
@@ -45,7 +45,7 @@ templates = [
       totalPlayers:[12,Validators.required],
       players: this.fb.array([])
     });
-    this.updatePlayersArray(this.profileForm.get('totalPlayers')?.value);
+    this.updatePlayersArray(this.createEventForm.get('totalPlayers')?.value);
     for (let i = 1; i <= 12; i++) {
       for(let x = 0; x <= 45; x += 15){
         let time = `${i}:${x === 0?'00': x}`;
@@ -54,16 +54,12 @@ templates = [
     }
   }
   onSubmit() {
-    console.log(this.profileForm);
+    console.log(this.createEventForm);
   }
-  ngOnInit(): void {
-  }
-  
-  addAlias() {
-    this.Players.push(this.fb.control(''));
-  }
+  ngOnInit(): void {}
+
   maxPlayerValueChange(){
-    this.updatePlayersArray(this.profileForm.get('totalPlayers')?.value);
+    this.updatePlayersArray(this.createEventForm.get('totalPlayers')?.value);
   }
   templateChange(value: number){
     this.Players.clear();
@@ -83,7 +79,7 @@ templates = [
         this.Players.push(this.fb.group({position: ['R', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
-        this.profileForm.get('totalPlayers')?.setValue(14);
+        this.createEventForm.get('totalPlayers')?.setValue(14);
         break;
       case 2:
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
@@ -98,7 +94,7 @@ templates = [
         this.Players.push(this.fb.group({position: ['R', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
-        this.profileForm.get('totalPlayers')?.setValue(12);
+        this.createEventForm.get('totalPlayers')?.setValue(12);
         break;
       case 3:
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
@@ -113,7 +109,7 @@ templates = [
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
         this.Players.push(this.fb.group({position: ['R', Validators.required]}));
         this.Players.push(this.fb.group({position: ['R', Validators.required]}));
-        this.profileForm.get('totalPlayers')?.setValue(12);
+        this.createEventForm.get('totalPlayers')?.setValue(12);
         break;
       case 4:
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
@@ -130,7 +126,7 @@ templates = [
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
-        this.profileForm.get('totalPlayers')?.setValue(14);
+        this.createEventForm.get('totalPlayers')?.setValue(14);
         break;
       case 5:
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
@@ -145,7 +141,7 @@ templates = [
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
-        this.profileForm.get('totalPlayers')?.setValue(12);
+        this.createEventForm.get('totalPlayers')?.setValue(12);
         break;
       case 6:
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
@@ -160,19 +156,19 @@ templates = [
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.profileForm.get('totalPlayers')?.setValue(12);
+        this.createEventForm.get('totalPlayers')?.setValue(12);
         break
     }
     
-    this.profileForm.get('players')?.updateValueAndValidity();
+    this.createEventForm.get('players')?.updateValueAndValidity();
   }
   maxPlayerChange(){
-    if(this.profileForm.get('isMaxPlayers')?.value){
-      this.profileForm.get('totalPlayers')?.addValidators(Validators.required)
+    if(this.createEventForm.get('isMaxPlayers')?.value){
+      this.createEventForm.get('totalPlayers')?.addValidators(Validators.required)
     }else{
-      this.profileForm.get('totalPlayers')?.clearValidators()
+      this.createEventForm.get('totalPlayers')?.clearValidators()
     }
-    this.profileForm.get('totalPlayers')?.updateValueAndValidity();
+    this.createEventForm.get('totalPlayers')?.updateValueAndValidity();
   }
   private updatePlayersArray(totalPlayers: number){
     this.Players.clear();
