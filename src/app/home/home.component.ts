@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +7,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  createEventInfoForm: FormGroup;
   createEventForm:FormGroup;
   positions = [
     {value: 'A', name: 'Any'},
@@ -18,21 +19,42 @@ export class HomeComponent implements OnInit {
     {value: 'D', name: 'Defensive Specialist'},
   ];
   templates = [
-    {value: '1', name: '5-1 Rotation'},
-    {value: '2', name: '5-1 Rotation Typewrite'},
-    {value: '3', name: '5-1 Rotation No Libero'},
-    {value: '4', name: '4-2 Rotation'},
-    {value: '5', name: '4-2 Rotation Typewrite'},
-    {value: '6', name: '4-2 Rotation No Libero'},
+    {value: '0', name: 'Any Positions'},
+    {value: '1', name: 'Indoor: 5-1'},
+    {value: '2', name: 'Indoor: 5-1 Typewrite'},
+    {value: '3', name: 'Indoor: 5-1 No Libero'},
+    {value: '4', name: 'Indoor: 4-2'},
+    {value: '5', name: 'Indoor: 4-2 Typewrite'},
+    {value: '6', name: 'Indoor: 4-2 No Libero'},
+    {value: '7', name: 'Grass/Sand: Doubles'},
+    {value: '8', name: 'Grass/Sand: Triples'},
+    {value: '9', name: 'Grass/Sand: Quads'},
+    {value: '10', name: 'Grass/Sand: Sixes'},
   ];
   times: any = [];
+  showTotalPlayers = true;
   get IsMaxPlayers() {
     return this.createEventForm.get('isMaxPlayers')?.value;
   }
   get Players():FormArray {
     return this.createEventForm.get('players') as FormArray;
   }
+  get Teams():FormArray {
+    return this.createEventForm.get('teams') as FormArray;
+  }
+  get TotalPlayer(): FormControl{
+    return this.createEventForm.get('totalPlayers') as FormControl;
+  }
   constructor(private fb: FormBuilder) { 
+    this.createEventInfoForm = this.fb.group({
+      eventDate: ['', Validators.required],
+      startTime: ['', Validators.required],
+      startTimeAMPM: ['PM', Validators.required],
+      endTime: ['', Validators.required],
+      endTimeAMPM: ['PM', Validators.required],
+      eventName: ['', Validators.required],
+      location: ['', Validators.required],
+    });
     this.createEventForm = this.fb.group({
       eventDate: ['', Validators.required],
       startTime: ['', Validators.required],
@@ -41,11 +63,11 @@ export class HomeComponent implements OnInit {
       endTimeAMPM: ['PM', Validators.required],
       eventName: ['', Validators.required],
       location: ['', Validators.required],
-      isMaxPlayers: [true],
-      totalPlayers:[12,Validators.required],
-      players: this.fb.array([])
+      totalPlayers:[6, Validators.required],
+      selectedTemplate: ['0',Validators.required],
+      players: this.fb.array([]),
+      teams: this.fb.array([])
     });
-    this.updatePlayersArray(this.createEventForm.get('totalPlayers')?.value);
     for (let i = 1; i <= 12; i++) {
       for(let x = 0; x <= 45; x += 15){
         let time = `${i}:${x === 0?'00': x}`;
@@ -57,13 +79,49 @@ export class HomeComponent implements OnInit {
     console.log(this.createEventForm);
   }
   ngOnInit(): void {}
-
-  maxPlayerValueChange(){
-    this.updatePlayersArray(this.createEventForm.get('totalPlayers')?.value);
+  addTeam(){
+    let template = this.createEventForm.get('selectedTemplate')?.value;
+    let players:FormGroup[] = [];
+    switch(+template){
+      case 0:
+        let totalPlayer = this.createEventForm.get('totalPlayers')?.value
+        for(let i = 0; i < totalPlayer; i++){
+          players.push(this.fb.group({position: ['A', Validators.required]}));
+        }
+        break;
+    }
+    console.log(players);
+    this.Teams.push(this.fb.group({
+      players: this.fb.array(players)
+    }));
   }
-  templateChange(value: number){
+  templateChange(value:number){
+    this.createEventForm.get('totalPlayers')?.clearValidators();
+    if(value == 0){
+      this.createEventForm.get('totalPlayers')?.addValidators([Validators.required]);
+      this.showTotalPlayers = true;
+    }else{
+      this.showTotalPlayers = false;
+    }
+    this.createEventForm.get('totalPlayers')?.updateValueAndValidity();
+  }
+  addPlayers(value: number){
     this.Players.clear();
     switch(+value){
+      case 0:
+        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
+        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
+        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
+        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
+        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
+        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
+        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
+        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
+        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
+        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
+        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
+        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
+        break;
       case 1:
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
@@ -162,14 +220,14 @@ export class HomeComponent implements OnInit {
     
     this.createEventForm.get('players')?.updateValueAndValidity();
   }
-  maxPlayerChange(){
-    if(this.createEventForm.get('isMaxPlayers')?.value){
-      this.createEventForm.get('totalPlayers')?.addValidators(Validators.required)
-    }else{
-      this.createEventForm.get('totalPlayers')?.clearValidators()
-    }
-    this.createEventForm.get('totalPlayers')?.updateValueAndValidity();
-  }
+  // maxPlayerChange(){
+  //   if(this.createEventForm.get('isMaxPlayers')?.value){
+  //     this.createEventForm.get('totalPlayers')?.addValidators(Validators.required)
+  //   }else{
+  //     this.createEventForm.get('totalPlayers')?.clearValidators()
+  //   }
+  //   this.createEventForm.get('totalPlayers')?.updateValueAndValidity();
+  // }
   private updatePlayersArray(totalPlayers: number){
     this.Players.clear();
     for (let i = 0; i < totalPlayers; i++) {

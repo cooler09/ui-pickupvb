@@ -45,20 +45,43 @@
                   <mat-option value="AM">AM</mat-option>
                 </mat-select>
               </mat-form-field>
-              <mat-slide-toggle formControlName="isMaxPlayers" (change)="maxPlayerChange()">Max Players?</mat-slide-toggle>
-              <div *ngIf="IsMaxPlayers">
-                <mat-form-field appearance="fill" style="width:90px">
-                  <mat-label>Total Players</mat-label>
-                  <input matInput formControlName="totalPlayers" (change)="maxPlayerValueChange()" type="number" value="12">
-                </mat-form-field>
-                <mat-form-field appearance="fill">
-                  <mat-label>Templates</mat-label>
-                  <mat-select (selectionChange)="templateChange($event.value)">
-                    <mat-option *ngFor="let template of templates" [value]="template.value">
-                      {{template.name}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
+              <div>
+                <div>
+                  <mat-form-field appearance="fill" style="width:90px" *ngIf="showTotalPlayers">
+                    <mat-label>Players</mat-label>
+                    <input matInput formControlName="totalPlayers" type="number" value="">
+                  </mat-form-field>
+                  <mat-form-field appearance="fill">
+                    <mat-label>Templates</mat-label>
+                    <mat-select formControlName="selectedTemplate" (selectionChange)="templateChange($event.value)">
+                      <mat-option *ngFor="let template of templates" [value]="template.value">
+                        {{template.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <button mat-raised-button (click)="addTeam()" [disabled]="!TotalPlayer.valid">Add Team</button>
+                </div>
+                <div formArrayName="teams" class="d-flex flex-wrap">
+                  <div *ngFor="let team of Teams.controls; let i=index" >
+                    <div [formGroupName]="i">
+                      <div formArrayName="players" class="d-flex flex-wrap">
+                        <div *ngFor="let player of Players.controls; let x=index" >
+                          <div [formGroupName]="x">
+                            <mat-form-field appearance="fill">
+                              <mat-label>Position {{1 +x}}</mat-label>
+                              <mat-select id="playerPosition-{{ x }}" formControlName="position">
+                                <mat-option *ngFor="let position of positions" [value]="position.value">
+                                  {{position.name}}
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div formArrayName="players" class="d-flex flex-wrap">
                   <div *ngFor="let player of Players.controls; let i=index" >
                     <div [formGroupName]="i">
