@@ -42,10 +42,10 @@ templates = [
       eventName: ['', Validators.required],
       location: ['', Validators.required],
       isMaxPlayers: [true],
-      maxPlayers:[12,Validators.required],
+      totalPlayers:[12,Validators.required],
       players: this.fb.array([])
     });
-    this.updatePlayersArray(this.profileForm.get('maxPlayers')?.value);
+    this.updatePlayersArray(this.profileForm.get('totalPlayers')?.value);
     for (let i = 1; i <= 12; i++) {
       for(let x = 0; x <= 45; x += 15){
         let time = `${i}:${x === 0?'00': x}`;
@@ -63,17 +63,18 @@ templates = [
     this.Players.push(this.fb.control(''));
   }
   maxPlayerValueChange(){
-    this.updatePlayersArray(this.profileForm.get('maxPlayers')?.value);
+    this.updatePlayersArray(this.profileForm.get('totalPlayers')?.value);
   }
   templateChange(value: number){
     this.Players.clear();
-    console.log(value);
     switch(+value){
       case 1:
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
         this.Players.push(this.fb.group({position: ['M', Validators.required]}));
         this.Players.push(this.fb.group({position: ['M', Validators.required]}));
+        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
+        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
@@ -82,15 +83,13 @@ templates = [
         this.Players.push(this.fb.group({position: ['R', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
-        console.log(this.Players);
+        this.profileForm.get('totalPlayers')?.setValue(14);
         break;
       case 2:
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
         this.Players.push(this.fb.group({position: ['M', Validators.required]}));
         this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
@@ -99,6 +98,7 @@ templates = [
         this.Players.push(this.fb.group({position: ['R', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
+        this.profileForm.get('totalPlayers')?.setValue(12);
         break;
       case 3:
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
@@ -113,6 +113,7 @@ templates = [
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
         this.Players.push(this.fb.group({position: ['R', Validators.required]}));
         this.Players.push(this.fb.group({position: ['R', Validators.required]}));
+        this.profileForm.get('totalPlayers')?.setValue(12);
         break;
       case 4:
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
@@ -129,6 +130,7 @@ templates = [
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
+        this.profileForm.get('totalPlayers')?.setValue(14);
         break;
       case 5:
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
@@ -143,6 +145,7 @@ templates = [
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
         this.Players.push(this.fb.group({position: ['L', Validators.required]}));
+        this.profileForm.get('totalPlayers')?.setValue(12);
         break;
       case 6:
         this.Players.push(this.fb.group({position: ['S', Validators.required]}));
@@ -157,6 +160,7 @@ templates = [
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
         this.Players.push(this.fb.group({position: ['O', Validators.required]}));
+        this.profileForm.get('totalPlayers')?.setValue(12);
         break
     }
     
@@ -164,15 +168,15 @@ templates = [
   }
   maxPlayerChange(){
     if(this.profileForm.get('isMaxPlayers')?.value){
-      this.profileForm.get('maxPlayers')?.addValidators(Validators.required)
+      this.profileForm.get('totalPlayers')?.addValidators(Validators.required)
     }else{
-      this.profileForm.get('maxPlayers')?.clearValidators()
+      this.profileForm.get('totalPlayers')?.clearValidators()
     }
-    this.profileForm.get('maxPlayers')?.updateValueAndValidity();
+    this.profileForm.get('totalPlayers')?.updateValueAndValidity();
   }
-  private updatePlayersArray(maxPlayers: number){
+  private updatePlayersArray(totalPlayers: number){
     this.Players.clear();
-    for (let i = 0; i < maxPlayers; i++) {
+    for (let i = 0; i < totalPlayers; i++) {
       this.Players.push(this.fb.group({position: ['A', Validators.required]}));
     }
   }
