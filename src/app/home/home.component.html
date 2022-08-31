@@ -11,27 +11,59 @@
                 <input matInput formControlName="location" value="">
               </mat-form-field>
               <mat-form-field appearance="fill">
-                <mat-label>Start Date</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="startDate">
+                <mat-label>Event Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="eventDate">
                 <mat-hint>MM/DD/YYYY</mat-hint>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
+              <mat-form-field appearance="fill" style="width:100px">
+                <mat-label>Start Time</mat-label>
+                <mat-select formControlName="startTime">
+                  <mat-option *ngFor="let time of times" [value]="time.value">
+                    {{time.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="fill" style="width:80px">
+                <mat-select formControlName="startTimeAMPM">
+                  <mat-option value="PM">PM</mat-option>
+                  <mat-option value="AM">AM</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="fill" style="width:100px">
+                <mat-label>End Time</mat-label>
+                <mat-select formControlName="endTime">
+                  <mat-option *ngFor="let time of times" [value]="time.value">
+                    {{time.name}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field appearance="fill" style="width:80px">
+                <mat-select formControlName="endTimeAMPM">
+                  <mat-option value="PM">PM</mat-option>
+                  <mat-option value="AM">AM</mat-option>
+                </mat-select>
+              </mat-form-field>
               <mat-slide-toggle formControlName="isMaxPlayers" (change)="maxPlayerChange()">Max Players?</mat-slide-toggle>
               <div *ngIf="IsMaxPlayers">
-                <mat-form-field appearance="fill" >
+                <mat-form-field appearance="fill" style="width:90px">
                   <mat-label>Max Players</mat-label>
                   <input matInput formControlName="maxPlayers" (change)="maxPlayerValueChange()" type="number" value="12">
                 </mat-form-field>
-                <div formArrayName="players">
-                  <div *ngFor="let player of Players.controls; let i=index">
+                <mat-form-field appearance="fill">
+                  <mat-label>Templates</mat-label>
+                  <mat-select (selectionChange)="templateChange($event.value)">
+                    <mat-option *ngFor="let template of templates" [value]="template.value">
+                      {{template.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div formArrayName="players" class="d-flex flex-wrap">
+                  <div *ngFor="let player of Players.controls; let i=index" >
                     <div [formGroupName]="i">
-                      <mat-form-field appearance="fill" >
-                        <mat-label>Name</mat-label>
-                        <input matInput id="playerName-{{ i }}" formControlName="name" value="">
-                      </mat-form-field>
                       <mat-form-field appearance="fill">
-                        <mat-label>Position</mat-label>
+                        <mat-label>Position {{1 +i}}</mat-label>
                         <mat-select id="playerPosition-{{ i }}" formControlName="position">
                           <mat-option *ngFor="let position of positions" [value]="position.value">
                             {{position.name}}
