@@ -8,6 +8,15 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class HomeComponent implements OnInit {
   profileForm:FormGroup;
+  positions = [
+    {value: 'A', name: 'Any'},
+    {value: 'L', name: 'Libero'},
+    {value: 'S', name: 'Setter'},
+    {value: 'M', name: 'Middle Blocker'},
+    {value: 'O', name: 'Outside Hitter'},
+    {value: 'R', name: 'Right Side'},
+    {value: 'D', name: 'Defensive Specialist'},
+];
   get IsMaxPlayers() {
     return this.profileForm.get('isMaxPlayers')?.value;
   }
@@ -48,7 +57,10 @@ export class HomeComponent implements OnInit {
   private updatePlayersArray(maxPlayers: number){
     this.Players.clear()
     for (let i = 0; i < maxPlayers; i++) {
-      this.Players.push(this.fb.control(''));
+      this.Players.push(this.fb.group({
+        name: [''],
+        position: ['']
+      }));
     }
   }
 }
