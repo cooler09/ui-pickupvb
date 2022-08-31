@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit,OnDestroy {
+  destroyed = new Subject<void>();
   createEventInfoForm: FormGroup;
   createEventForm:FormGroup;
   positions = [
@@ -33,6 +36,7 @@ export class HomeComponent implements OnInit {
   ];
   times: any = [];
   showTotalPlayers = true;
+  isSmallScreen = false;
   get IsMaxPlayers() {
     return this.createEventForm.get('isMaxPlayers')?.value;
   }
@@ -45,7 +49,20 @@ export class HomeComponent implements OnInit {
   get TotalPlayer(): FormControl{
     return this.createEventForm.get('totalPlayers') as FormControl;
   }
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder,breakpointObserver: BreakpointObserver) { 
+    const isSmallScreen = breakpointObserver.isMatched('(max-width: 599.98px)');
+    breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ])
+      .pipe(takeUntil(this.destroyed))
+      .subscribe(result => {
+        this.isSmallScreen = result.breakpoints[Breakpoints.Small];
+      });
     this.createEventInfoForm = this.fb.group({
       eventDate: ['', Validators.required],
       startTime: ['', Validators.required],
@@ -67,6 +84,10 @@ export class HomeComponent implements OnInit {
         this.times.push({value: time, name: time});
       }
     }
+  }
+  ngOnDestroy(): void {
+    this.destroyed.next();
+    this.destroyed.complete();
   }
   onSubmit() {
     console.log(this.createEventForm);
