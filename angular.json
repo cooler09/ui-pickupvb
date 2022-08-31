@@ -151,5 +151,7 @@
       }
     }
   },
-  "defaultProject": "ui-pickupvb"
+  "cli": {
+    "analytics": false
+  }
 }

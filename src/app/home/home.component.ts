@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -10,8 +10,8 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class HomeComponent implements OnInit,OnDestroy {
   destroyed = new Subject<void>();
-  createEventInfoForm: FormGroup;
-  createEventForm:FormGroup;
+  createEventInfoForm: UntypedFormGroup;
+  createEventForm:UntypedFormGroup;
   positions = [
     {value: 'A', name: 'Any'},
     {value: 'L', name: 'Libero'},
@@ -40,16 +40,16 @@ export class HomeComponent implements OnInit,OnDestroy {
   get IsMaxPlayers() {
     return this.createEventForm.get('isMaxPlayers')?.value;
   }
-  get Players():FormArray {
-    return this.createEventForm.get('players') as FormArray;
+  get Players():UntypedFormArray {
+    return this.createEventForm.get('players') as UntypedFormArray;
   }
-  get Teams():FormArray {
-    return this.createEventForm.get('teams') as FormArray;
+  get Teams():UntypedFormArray {
+    return this.createEventForm.get('teams') as UntypedFormArray;
   }
-  get TotalPlayer(): FormControl{
-    return this.createEventForm.get('totalPlayers') as FormControl;
+  get TotalPlayer(): UntypedFormControl{
+    return this.createEventForm.get('totalPlayers') as UntypedFormControl;
   }
-  constructor(private fb: FormBuilder,breakpointObserver: BreakpointObserver) { 
+  constructor(private fb: UntypedFormBuilder,breakpointObserver: BreakpointObserver) { 
     const isSmallScreen = breakpointObserver.isMatched('(max-width: 599.98px)');
     breakpointObserver
       .observe([
@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit,OnDestroy {
   ngOnInit(): void {}
   addTeam(){
     let template = this.createEventForm.get('selectedTemplate')?.value;
-    let players:FormGroup[] = [];
+    let players:UntypedFormGroup[] = [];
     switch(+template){
       case 0:
         let totalPlayer = this.createEventForm.get('totalPlayers')?.value
