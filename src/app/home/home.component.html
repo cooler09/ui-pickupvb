@@ -1,50 +1,52 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
+          <form [formGroup]="createEventInfoForm">
+            <mat-form-field appearance="fill">
+              <mat-label>Event Name</mat-label>
+              <input matInput formControlName="eventName" placeholder="Volleyball Open Play" value="">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Location</mat-label>
+              <input matInput formControlName="location" value="">
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+              <mat-label>Event Date</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="eventDate">
+              <mat-hint>MM/DD/YYYY</mat-hint>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="fill" style="width:100px">
+              <mat-label>Start Time</mat-label>
+              <mat-select formControlName="startTime">
+                <mat-option *ngFor="let time of times" [value]="time.value">
+                  {{time.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" style="width:80px">
+              <mat-select formControlName="startTimeAMPM">
+                <mat-option value="PM">PM</mat-option>
+                <mat-option value="AM">AM</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" style="width:100px">
+              <mat-label>End Time</mat-label>
+              <mat-select formControlName="endTime">
+                <mat-option *ngFor="let time of times" [value]="time.value">
+                  {{time.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" style="width:80px">
+              <mat-select formControlName="endTimeAMPM">
+                <mat-option value="PM">PM</mat-option>
+                <mat-option value="AM">AM</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </form>
             <form [formGroup]="createEventForm" (ngSubmit)="onSubmit()">
-              <mat-form-field appearance="fill">
-                <mat-label>Event Name</mat-label>
-                <input matInput formControlName="eventName" placeholder="Volleyball Open Play" value="">
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>Location</mat-label>
-                <input matInput formControlName="location" value="">
-              </mat-form-field>
-              <mat-form-field appearance="fill">
-                <mat-label>Event Date</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="eventDate">
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-              </mat-form-field>
-              <mat-form-field appearance="fill" style="width:100px">
-                <mat-label>Start Time</mat-label>
-                <mat-select formControlName="startTime">
-                  <mat-option *ngFor="let time of times" [value]="time.value">
-                    {{time.name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field appearance="fill" style="width:80px">
-                <mat-select formControlName="startTimeAMPM">
-                  <mat-option value="PM">PM</mat-option>
-                  <mat-option value="AM">AM</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field appearance="fill" style="width:100px">
-                <mat-label>End Time</mat-label>
-                <mat-select formControlName="endTime">
-                  <mat-option *ngFor="let time of times" [value]="time.value">
-                    {{time.name}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field appearance="fill" style="width:80px">
-                <mat-select formControlName="endTimeAMPM">
-                  <mat-option value="PM">PM</mat-option>
-                  <mat-option value="AM">AM</mat-option>
-                </mat-select>
-              </mat-form-field>
               <div>
                 <div>
                   <mat-form-field appearance="fill" style="width:90px" *ngIf="showTotalPlayers">
@@ -98,7 +100,7 @@
                   
                 </div>
               </div>
-              <button mat-raised-button color="primary" type="submit" [disabled]="!createEventForm.valid">Submit</button>
+              <!-- <button mat-raised-button color="primary" type="submit" [disabled]="!createEventForm.valid">Submit</button> -->
             </form>
         </div>
     </div>

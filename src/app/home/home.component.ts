@@ -56,13 +56,6 @@ export class HomeComponent implements OnInit {
       location: ['', Validators.required],
     });
     this.createEventForm = this.fb.group({
-      eventDate: ['', Validators.required],
-      startTime: ['', Validators.required],
-      startTimeAMPM: ['PM', Validators.required],
-      endTime: ['', Validators.required],
-      endTimeAMPM: ['PM', Validators.required],
-      eventName: ['', Validators.required],
-      location: ['', Validators.required],
       totalPlayers:[6, Validators.required],
       selectedTemplate: ['0',Validators.required],
       players: this.fb.array([]),
