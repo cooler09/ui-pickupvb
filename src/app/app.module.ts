@@ -22,6 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatStepperModule} from '@angular/material/stepper';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import {MatStepperModule} from '@angular/material/stepper';
   ],
   imports: [
     BrowserModule,
+    GooglePlaceModule,
     AppRoutingModule,
     ReactiveFormsModule,
     MatNativeDateModule,

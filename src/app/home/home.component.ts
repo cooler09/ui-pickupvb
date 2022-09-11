@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -9,6 +10,7 @@ import { Subject, takeUntil } from 'rxjs';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit,OnDestroy {
+  @ViewChild("placesRef") placesRef : GooglePlaceDirective | undefined;
   destroyed = new Subject<void>();
   createEventInfoForm: UntypedFormGroup;
   createEventForm:UntypedFormGroup;
