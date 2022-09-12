@@ -25,6 +25,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 import { EventDetailInfoComponent } from './event-detail-info/event-detail-info.component';
 import { EventTeamComponent } from './event-team/event-team.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { EventTeamComponent } from './event-team/event-team.component';
   imports: [
     BrowserModule,
     GooglePlaceModule,
+    MatExpansionModule,
     AppRoutingModule,
     ReactiveFormsModule,
     MatNativeDateModule,

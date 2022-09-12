@@ -16,15 +16,18 @@
         <button mat-raised-button (click)="addTeam()" [disabled]="!TotalPlayer.valid">Add Team</button>
       </div>
       <hr>
-      <div formArrayName="teams" class="d-flex flex-wrap">
-        <div *ngFor="let team of Teams.controls; let i=index" >
-          <div class="d-flex justify-content-between">
-            <p class="mr-2">Team {{1 + i}}</p>
-            <button mat-icon-button class="text-danger" (click)="deleteTeam(i)">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </div>
-          <hr>
+      <mat-accordion formArrayName="teams" class="example-headers-align" multi>
+        <mat-expansion-panel expanded *ngFor="let team of Teams.controls; let i=index">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Team {{1 + i}}
+            </mat-panel-title>
+            <mat-panel-description class="d-flex justify-content-end">
+              <button mat-icon-button class="text-danger" (click)="deleteTeam(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
           <div [formGroupName]="i">
             <div formArrayName="players" class="d-flex flex-wrap">
               <div *ngFor="let player of Players(i).controls; let x=index" >
@@ -44,7 +47,7 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
 </form>
