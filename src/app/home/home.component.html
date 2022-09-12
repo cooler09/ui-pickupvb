@@ -3,116 +3,14 @@
         <div class="col-12">
           <mat-stepper [linear]="false" [orientation]="isSmallScreen?'vertical':'horizontal'" #stepper>
             <mat-step [stepControl]="createEventInfoForm" label="Fill out Event Information">
-              <form [formGroup]="createEventInfoForm">
-                <div>
-                  <mat-form-field class="p-2" appearance="fill">
-                    <mat-label>Event Name</mat-label>
-                    <input matInput formControlName="eventName" placeholder="Volleyball Open Play" value="">
-                  </mat-form-field>
-                  <mat-form-field class="p-2" appearance="fill" style="width:300px">
-                    <mat-label>Location</mat-label>
-                    <input ngx-google-places-autocomplete  matInput formControlName="location" #placesRef="ngx-places"/>
-                  </mat-form-field>
-                </div>
-                <div class="d-flex flex-wrap">
-                  <mat-form-field class="p-2" appearance="fill">
-                    <mat-label>Event Date</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="eventDate">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
-                  <div class="p-2">
-                    <mat-form-field appearance="fill" style="width:120px">
-                      <mat-label>Start Time</mat-label>
-                      <mat-select formControlName="startTime">
-                        <mat-option *ngFor="let time of times" [value]="time.value">
-                          {{time.name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <mat-form-field appearance="fill" style="width:80px">
-                      <mat-select formControlName="startTimeAMPM">
-                        <mat-option value="PM">PM</mat-option>
-                        <mat-option value="AM">AM</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                  <div class="p-2">
-                    <mat-form-field appearance="fill" style="width:120px">
-                      <mat-label>End Time</mat-label>
-                      <mat-select formControlName="endTime">
-                        <mat-option *ngFor="let time of times" [value]="time.value">
-                          {{time.name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <mat-form-field appearance="fill" style="width:80px">
-                      <mat-select formControlName="endTimeAMPM">
-                        <mat-option value="PM">PM</mat-option>
-                        <mat-option value="AM">AM</mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-                </div>
-                <div>
-                  <button mat-button matStepperNext>Next</button>
-                </div>
-              </form>
+              <app-event-detail-info [createEventInfoForm]="createEventInfoForm"></app-event-detail-info>
             </mat-step>
             <mat-step label="Specify teams and players">
-              <form [formGroup]="createEventForm" (ngSubmit)="onSubmit()">
-                <div>
-                  <div>
-                    <mat-form-field appearance="fill" style="width:90px" *ngIf="showTotalPlayers">
-                      <mat-label>Players</mat-label>
-                      <input matInput formControlName="totalPlayers" type="number" value="">
-                    </mat-form-field>
-                    <mat-form-field appearance="fill">
-                      <mat-label>Templates</mat-label>
-                      <mat-select formControlName="selectedTemplate" (selectionChange)="templateChange($event.value)">
-                        <mat-option *ngFor="let template of templates" [value]="template.value">
-                          {{template.name}}
-                        </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                    <button mat-raised-button (click)="addTeam()" [disabled]="!TotalPlayer.valid">Add Team</button>
-                  </div>
-                  <hr>
-                  <div formArrayName="teams" class="d-flex flex-wrap">
-                    <div *ngFor="let team of Teams.controls; let i=index" >
-                      <div class="d-flex justify-content-between">
-                        <p class="mr-2">Team {{1 + i}}</p>
-                        <mat-icon class="cursor-hover text-danger" (click)="deleteTeam(i)">delete</mat-icon>
-                      </div>
-                      <hr>
-                      <div [formGroupName]="i">
-                        <div formArrayName="players" class="d-flex flex-wrap">
-                          <div *ngFor="let player of Players(i).controls; let x=index" >
-                            <div class="d-flex align-items-center justify-content-center" [formGroupName]="x">
-                              <mat-form-field appearance="fill" class="mr-2">
-                                <mat-label>Position {{1 +x}}</mat-label>
-                                <mat-select id="playerPosition-{{ x }}" formControlName="position">
-                                  <mat-option *ngFor="let position of positions" [value]="position.value">
-                                    {{position.name}}
-                                  </mat-option>
-                                </mat-select>
-                              </mat-form-field>
-                              <mat-icon class="cursor-hover text-danger" (click)="deletePlayer(i,x)">delete</mat-icon>
-                            </div>
-                          </div>
-                          
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <!-- <button mat-raised-button color="primary" type="submit" [disabled]="!createEventForm.valid">Submit</button> -->
-              </form>
-                <div>
-                  <button mat-button matStepperPrevious>Back</button>
-                  <button mat-button matStepperNext>Next</button>
-                </div>
+              <app-event-team [createEventForm]="createEventForm"></app-event-team>
+              <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+              </div>
             </mat-step>
             <mat-step>
               <ng-template matStepLabel>Done</ng-template>

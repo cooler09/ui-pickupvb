@@ -1,0 +1,56 @@
+<form [formGroup]="createEventInfoForm">
+    <div>
+      <mat-form-field class="p-2" appearance="fill">
+        <mat-label>Event Name</mat-label>
+        <input matInput formControlName="eventName" placeholder="Volleyball Open Play" value="">
+      </mat-form-field>
+      <mat-form-field class="p-2" appearance="fill" style="width:300px">
+        <mat-label>Location</mat-label>
+        <input ngx-google-places-autocomplete  matInput formControlName="location" #placesRef="ngx-places"/>
+      </mat-form-field>
+    </div>
+    <div class="d-flex flex-wrap">
+      <mat-form-field class="p-2" appearance="fill">
+        <mat-label>Event Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="eventDate">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <div class="p-2">
+        <mat-form-field appearance="fill" style="width:120px">
+          <mat-label>Start Time</mat-label>
+          <mat-select formControlName="startTime">
+            <mat-option *ngFor="let time of times" [value]="time.value">
+              {{time.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" style="width:80px">
+          <mat-select formControlName="startTimeAMPM">
+            <mat-option value="PM">PM</mat-option>
+            <mat-option value="AM">AM</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="p-2">
+        <mat-form-field appearance="fill" style="width:120px">
+          <mat-label>End Time</mat-label>
+          <mat-select formControlName="endTime">
+            <mat-option *ngFor="let time of times" [value]="time.value">
+              {{time.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" style="width:80px">
+          <mat-select formControlName="endTimeAMPM">
+            <mat-option value="PM">PM</mat-option>
+            <mat-option value="AM">AM</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+  </form>

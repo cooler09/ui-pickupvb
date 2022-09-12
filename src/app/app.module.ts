@@ -23,13 +23,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatStepperModule } from '@angular/material/stepper';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { EventDetailInfoComponent } from './event-detail-info/event-detail-info.component';
+import { EventTeamComponent } from './event-team/event-team.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     EventComponent,
-    ErrorComponent
+    ErrorComponent,
+    EventDetailInfoComponent,
+    EventTeamComponent
   ],
   imports: [
     BrowserModule,
