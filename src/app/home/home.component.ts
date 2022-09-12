@@ -42,8 +42,8 @@ export class HomeComponent implements OnInit,OnDestroy {
   get IsMaxPlayers() {
     return this.createEventForm.get('isMaxPlayers')?.value;
   }
-  get Players():UntypedFormArray {
-    return this.createEventForm.get('players') as UntypedFormArray;
+  Players(i:number):UntypedFormArray {
+    return this.Teams.controls[i].get('players') as UntypedFormArray;
   }
   get Teams():UntypedFormArray {
     return this.createEventForm.get('teams') as UntypedFormArray;
@@ -51,8 +51,7 @@ export class HomeComponent implements OnInit,OnDestroy {
   get TotalPlayer(): UntypedFormControl{
     return this.createEventForm.get('totalPlayers') as UntypedFormControl;
   }
-  constructor(private fb: UntypedFormBuilder,breakpointObserver: BreakpointObserver) { 
-    const isSmallScreen = breakpointObserver.isMatched('(max-width: 599.98px)');
+  constructor(private fb: UntypedFormBuilder,breakpointObserver: BreakpointObserver) {
     breakpointObserver
       .observe([
         Breakpoints.XSmall,
@@ -105,11 +104,69 @@ export class HomeComponent implements OnInit,OnDestroy {
           players.push(this.fb.group({position: ['A', Validators.required]}));
         }
         break;
+      case 1:
+        players.push(this.fb.group({position: ['S', Validators.required]}));
+        players.push(this.fb.group({position: ['M', Validators.required]}));
+        players.push(this.fb.group({position: ['M', Validators.required]}));
+        players.push(this.fb.group({position: ['O', Validators.required]}));
+        players.push(this.fb.group({position: ['O', Validators.required]}));
+        players.push(this.fb.group({position: ['R', Validators.required]}));
+        players.push(this.fb.group({position: ['L', Validators.required]}));
+        break;
+      case 2:
+        players.push(this.fb.group({position: ['S', Validators.required]}));
+        players.push(this.fb.group({position: ['M', Validators.required]}));
+        players.push(this.fb.group({position: ['O', Validators.required]}));
+        players.push(this.fb.group({position: ['O', Validators.required]}));
+        players.push(this.fb.group({position: ['R', Validators.required]}));
+        players.push(this.fb.group({position: ['L', Validators.required]}));
+        break;
+      case 3:
+        players.push(this.fb.group({position: ['S', Validators.required]}));
+        players.push(this.fb.group({position: ['M', Validators.required]}));
+        players.push(this.fb.group({position: ['M', Validators.required]}));
+        players.push(this.fb.group({position: ['O', Validators.required]}));
+        players.push(this.fb.group({position: ['O', Validators.required]}));
+        players.push(this.fb.group({position: ['R', Validators.required]}));
+        break;
+      case 4:
+        players.push(this.fb.group({position: ['S', Validators.required]}));
+        players.push(this.fb.group({position: ['S', Validators.required]}));
+        players.push(this.fb.group({position: ['M', Validators.required]}));
+        players.push(this.fb.group({position: ['M', Validators.required]}));
+        players.push(this.fb.group({position: ['O', Validators.required]}));
+        players.push(this.fb.group({position: ['O', Validators.required]}));
+        players.push(this.fb.group({position: ['L', Validators.required]}));
+        break;
+      case 5:
+        players.push(this.fb.group({position: ['S', Validators.required]}));
+        players.push(this.fb.group({position: ['S', Validators.required]}));
+        players.push(this.fb.group({position: ['M', Validators.required]}));
+        players.push(this.fb.group({position: ['O', Validators.required]}));
+        players.push(this.fb.group({position: ['O', Validators.required]}));
+        players.push(this.fb.group({position: ['L', Validators.required]}));
+        break;
+      case 6:
+        players.push(this.fb.group({position: ['S', Validators.required]}));
+        players.push(this.fb.group({position: ['S', Validators.required]}));
+        players.push(this.fb.group({position: ['M', Validators.required]}));
+        players.push(this.fb.group({position: ['M', Validators.required]}));
+        players.push(this.fb.group({position: ['O', Validators.required]}));
+        players.push(this.fb.group({position: ['O', Validators.required]}));
+        break
     }
-    console.log(players);
     this.Teams.push(this.fb.group({
       players: this.fb.array(players)
     }));
+    this.Teams?.updateValueAndValidity();
+  }
+  deleteTeam(teamIndex: number){
+    this.Teams.removeAt(teamIndex);
+    this.Teams?.updateValueAndValidity();
+  }
+  deletePlayer(teamIndex: number, playerIndex: number){
+    (this.Teams?.controls[teamIndex].get('players') as UntypedFormArray).removeAt(playerIndex);
+    this.Teams?.updateValueAndValidity();
   }
   templateChange(value:number){
     this.createEventForm.get('totalPlayers')?.clearValidators();
@@ -120,134 +177,5 @@ export class HomeComponent implements OnInit,OnDestroy {
       this.showTotalPlayers = false;
     }
     this.createEventForm.get('totalPlayers')?.updateValueAndValidity();
-  }
-  addPlayers(value: number){
-    this.Players.clear();
-    switch(+value){
-      case 0:
-        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['A', Validators.required]}));
-        break;
-      case 1:
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['R', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['R', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['L', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['L', Validators.required]}));
-        this.createEventForm.get('totalPlayers')?.setValue(14);
-        break;
-      case 2:
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['R', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['R', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['L', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['L', Validators.required]}));
-        this.createEventForm.get('totalPlayers')?.setValue(12);
-        break;
-      case 3:
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['R', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['R', Validators.required]}));
-        this.createEventForm.get('totalPlayers')?.setValue(12);
-        break;
-      case 4:
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['L', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['L', Validators.required]}));
-        this.createEventForm.get('totalPlayers')?.setValue(14);
-        break;
-      case 5:
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['L', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['L', Validators.required]}));
-        this.createEventForm.get('totalPlayers')?.setValue(12);
-        break;
-      case 6:
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['S', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['M', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.Players.push(this.fb.group({position: ['O', Validators.required]}));
-        this.createEventForm.get('totalPlayers')?.setValue(12);
-        break
-    }
-    
-    this.createEventForm.get('players')?.updateValueAndValidity();
-  }
-  // maxPlayerChange(){
-  //   if(this.createEventForm.get('isMaxPlayers')?.value){
-  //     this.createEventForm.get('totalPlayers')?.addValidators(Validators.required)
-  //   }else{
-  //     this.createEventForm.get('totalPlayers')?.clearValidators()
-  //   }
-  //   this.createEventForm.get('totalPlayers')?.updateValueAndValidity();
-  // }
-  private updatePlayersArray(totalPlayers: number){
-    this.Players.clear();
-    for (let i = 0; i < totalPlayers; i++) {
-      this.Players.push(this.fb.group({position: ['A', Validators.required]}));
-    }
   }
 }

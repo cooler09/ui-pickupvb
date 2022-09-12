@@ -78,13 +78,19 @@
                     </mat-form-field>
                     <button mat-raised-button (click)="addTeam()" [disabled]="!TotalPlayer.valid">Add Team</button>
                   </div>
+                  <hr>
                   <div formArrayName="teams" class="d-flex flex-wrap">
                     <div *ngFor="let team of Teams.controls; let i=index" >
+                      <div class="d-flex justify-content-between">
+                        <p class="mr-2">Team {{1 + i}}</p>
+                        <mat-icon class="cursor-hover text-danger" (click)="deleteTeam(i)">delete</mat-icon>
+                      </div>
+                      <hr>
                       <div [formGroupName]="i">
                         <div formArrayName="players" class="d-flex flex-wrap">
-                          <div *ngFor="let player of Players.controls; let x=index" >
-                            <div [formGroupName]="x">
-                              <mat-form-field appearance="fill">
+                          <div *ngFor="let player of Players(i).controls; let x=index" >
+                            <div class="d-flex align-items-center justify-content-center" [formGroupName]="x">
+                              <mat-form-field appearance="fill" class="mr-2">
                                 <mat-label>Position {{1 +x}}</mat-label>
                                 <mat-select id="playerPosition-{{ x }}" formControlName="position">
                                   <mat-option *ngFor="let position of positions" [value]="position.value">
@@ -92,27 +98,13 @@
                                   </mat-option>
                                 </mat-select>
                               </mat-form-field>
+                              <mat-icon class="cursor-hover text-danger" (click)="deletePlayer(i,x)">delete</mat-icon>
                             </div>
                           </div>
                           
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div formArrayName="players" class="d-flex flex-wrap">
-                    <div *ngFor="let player of Players.controls; let i=index" >
-                      <div [formGroupName]="i">
-                        <mat-form-field appearance="fill">
-                          <mat-label>Position {{1 +i}}</mat-label>
-                          <mat-select id="playerPosition-{{ i }}" formControlName="position">
-                            <mat-option *ngFor="let position of positions" [value]="position.value">
-                              {{position.name}}
-                            </mat-option>
-                          </mat-select>
-                        </mat-form-field>
-                      </div>
-                    </div>
-                    
                   </div>
                 </div>
                 <!-- <button mat-raised-button color="primary" type="submit" [disabled]="!createEventForm.valid">Submit</button> -->
