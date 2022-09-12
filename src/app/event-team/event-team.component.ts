@@ -107,7 +107,30 @@ export class EventTeamComponent implements OnInit {
         players.push(this.fb.group({position: ['M', Validators.required]}));
         players.push(this.fb.group({position: ['O', Validators.required]}));
         players.push(this.fb.group({position: ['O', Validators.required]}));
-        break
+        break;
+      case 7:
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        break;
+      case 8:
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        break;
+      case 9:
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        break;
+      case 10:
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        players.push(this.fb.group({position: ['A', Validators.required]}));
+        break;
     }
     this.Teams.push(this.fb.group({
       players: this.fb.array(players)

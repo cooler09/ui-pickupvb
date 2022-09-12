@@ -20,7 +20,9 @@
         <div *ngFor="let team of Teams.controls; let i=index" >
           <div class="d-flex justify-content-between">
             <p class="mr-2">Team {{1 + i}}</p>
-            <mat-icon class="cursor-hover text-danger" (click)="deleteTeam(i)">delete</mat-icon>
+            <button mat-icon-button class="text-danger" (click)="deleteTeam(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </div>
           <hr>
           <div [formGroupName]="i">
@@ -35,7 +37,9 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-                  <mat-icon class="cursor-hover text-danger" (click)="deletePlayer(i,x)">delete</mat-icon>
+                  <button mat-icon-button class="text-danger" (click)="deletePlayer(i,x)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
                 </div>
               </div>
             </div>
