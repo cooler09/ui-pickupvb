@@ -1,4 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
@@ -17,7 +18,10 @@ export class HomeComponent implements OnInit,OnDestroy {
   
   isSmallScreen = false;
   
-  constructor(private fb: UntypedFormBuilder,breakpointObserver: BreakpointObserver) {
+  constructor(
+    private http: HttpClient,
+    private fb: UntypedFormBuilder,
+    breakpointObserver: BreakpointObserver) {
     breakpointObserver
       .observe([
         Breakpoints.XSmall,
@@ -50,5 +54,16 @@ export class HomeComponent implements OnInit,OnDestroy {
     this.destroyed.complete();
   }
   ngOnInit(): void {}
+  create(){
+    let body ={
+      "name": "Test",
+      "location":"Test Loc",
+      "startDate": "2023-01-25",
+      "endDate": "2023-01-25"
+    }
+    this.http.post("http://localhost:5263/Event", body).subscribe(response =>{
+      console.log(response)
+    })
+  }
   
 }
