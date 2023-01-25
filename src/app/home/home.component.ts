@@ -55,11 +55,17 @@ export class HomeComponent implements OnInit,OnDestroy {
   }
   ngOnInit(): void {}
   create(){
+    let startDate = new Date(this.createEventInfoForm.get("eventDate")?.value);
+    let endDate = new Date(this.createEventInfoForm.get("eventDate")?.value);
+    let startTime = new Date(this.createEventInfoForm.get("startTime")?.value);
+    let endTime = new Date(this.createEventInfoForm.get("endTime")?.value);
+    let startTimeAMPM = new Date(this.createEventInfoForm.get("startTimeAMPM")?.value);
+    let endTimeAMPM = new Date(this.createEventInfoForm.get("endTimeAMPM")?.value);
     let body ={
-      "name": "Test",
-      "location":"Test Loc",
-      "startDate": "2023-01-25",
-      "endDate": "2023-01-25"
+      "name": this.createEventInfoForm.get("eventName")?.value,
+      "location":this.createEventInfoForm.get("location")?.value,
+      "startDate": startDate.toJSON(),
+      "endDate": endDate.toJSON()
     }
     this.http.post("http://localhost:5263/Event", body).subscribe(response =>{
       console.log(response)
