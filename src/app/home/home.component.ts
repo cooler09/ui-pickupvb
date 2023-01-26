@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit,OnDestroy {
       "startDate": startDate.toJSON(),
       "endDate": endDate.toJSON()
     }
-    this.http.post("http://localhost:5263/Event", body).subscribe(response =>{
+    this.http.post("http://api:5000/Event", body).subscribe(response =>{
       console.log(response)
     })
   }
