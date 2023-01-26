@@ -67,7 +67,13 @@ export class HomeComponent implements OnInit,OnDestroy {
       "startDate": startDate.toJSON(),
       "endDate": endDate.toJSON()
     }
-    this.http.post("http://api:5000/Event", body).subscribe(response =>{
+    let headers = new HttpHeaders();
+    headers.append("Access-Control-Allow-Origin","*");
+    headers.append("Access-Control-Allow-Methods","POST, GET, OPTIONS");
+    headers.append("Access-Control-Allow-Headers","Content-Type");
+    this.http.post("http://api:5000/Event", body,{
+      headers: new HttpHeaders()
+    }).subscribe(response =>{
       console.log(response)
     })
   }
