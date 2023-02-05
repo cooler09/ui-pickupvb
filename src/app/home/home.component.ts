@@ -4,6 +4,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormArray, UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
 import { Subject, takeUntil } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -72,7 +73,7 @@ export class HomeComponent implements OnInit,OnDestroy {
       "Access-Control-Allow-Methods":"POST, GET, OPTIONS",
       "Access-Control-Allow-Headers":"Content-Type"
     });
-    this.http.get("http://api/Event", {
+    this.http.get(`${environment.apiUrl}/Event`, {
       headers: headers
     }).subscribe(response =>{
       console.log(response)
