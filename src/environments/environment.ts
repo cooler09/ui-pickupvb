@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: "http://localhost:5263/",
+  apiUrl: "http://localhost:5263",
   appVersion: `${require('../../package.json').version}-dev`,
 };
 
