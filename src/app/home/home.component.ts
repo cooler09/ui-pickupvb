@@ -73,16 +73,11 @@ export class HomeComponent implements OnInit,OnDestroy {
       "Access-Control-Allow-Methods":"POST, GET, OPTIONS",
       "Access-Control-Allow-Headers":"Content-Type"
     });
-    this.http.get(`${environment.apiUrl}/Event`, {
+    this.http.post(`${environment.apiUrl}/Event`, body,{
       headers: headers
     }).subscribe(response =>{
       console.log(response)
     })
-    // this.http.post("http://api/Event", body,{
-    //   headers: new HttpHeaders()
-    // }).subscribe(response =>{
-    //   console.log(response)
-    // })
   }
   
 }
